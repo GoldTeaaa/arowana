@@ -1,0 +1,28 @@
+{
+    "description": "Arowana Super Red Named Augur",
+    "name":"HellBoy",
+    "image": "https://bafybeiabdjk5gyjjhj736xhbehxqe4rvhz7q6d75dyc2ushpk72kxj5kh4.ipfs.dweb.link?filename=SuperRed-1.jpg",
+    "attributes":[
+        {
+            "trait_type": "RFID", 
+            "value": "123"
+        },
+        {
+            "trait_type": "Fish", 
+            "value": "Arowana"
+        },
+        {
+            "trait_type": "Color", 
+            "value": "Red"
+        },
+        {
+            "trait_type": "Age", 
+            "value": "18"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "birthday", 
+            "value": 1393600000
+        }
+    ]
+}
