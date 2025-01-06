@@ -6,4 +6,4 @@ deploy:
 	@forge script script/DeployNFT.s.sol:DeployToken $(NETWORK_ARGS)
 
 mintNft:
-	@cast send 0x5FbDB2315678afecb367f032d93F642f64180aa3 "mint(string, string, string, string)" https://bafybeihdgawpw5r3lvb7gbgceba7n3jniv7253bjcukzhdowqt5sw5ly3i.ipfs.dweb.link?filename=SuperRed-1.m.JSON, RfidTest2, mom123.2, dad123.2 --private-key $(ANVIL_KEY_1) --rpc-url "http://localhost:8545"
+	@cast send 0x5FbDB2315678afecb367f032d93F642f64180aa3 "mint(string, string, string, string)" https://gateway.pinata.cloud/ipfs/bafkreibxfzslz7cn7izmjtarmoj2hr52ukw7ri5bdpnpkjafvn4ouljckq, Bx6821xe68521, Bdca78e61273i, Bcsn087218e1 --private-key $(ANVIL_KEY_1) --rpc-url "http://localhost:8545"
