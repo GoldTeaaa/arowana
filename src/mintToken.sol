@@ -29,6 +29,9 @@ contract mintToken is ERC721, Ownable{
     }
     mapping (string => FishParents) public s_RfidToParentUri;
 
+    //Track Owner
+    mapping(uint256 => address[]) private s_ownerHistory;
+
     //Check if the rfid or tokenUri is registered
     mapping(string => bool) private s_registeredRfid;
     mapping(string => bool) private s_registeredTokenUri;
@@ -43,7 +46,8 @@ contract mintToken is ERC721, Ownable{
     event tokenMinted(uint256 indexed tokenCounter,string indexed rfid,string tokenUri,string motherRfid,string fatherRfid);
     event parentAdded(string indexed rfid,string motherRfid,string fatherRfid);
     event tokenPriceForSale(uint256 indexed tokenCounter, uint256 indexed price);
-    event tokenBought(uint256 indexed tokenCounter, address indexed sender, uint256 indexed tokenPrice);
+    
+    event tokenBought(uint256 indexed tokenCounter, address owner ,address indexed buyer, uint256 indexed tokenPrice);
 
     constructor()ERC721("ArowanaFish","ARW") Ownable(msg.sender) {
         s_tokenCounter = 0;
@@ -52,12 +56,6 @@ contract mintToken is ERC721, Ownable{
     function tokenURI(uint256 tokenCounter) public view override returns(string memory){
         return s_tokenUriByTokenCounter[tokenCounter];
     }
-
-    // function _update(address from ,uint256 tokenCounter, address auth) internal override returns(address){
-    //     require(s_setFishPrice[tokenCounter] >= 0,"Token Not For Sale!");
-    //     super._update(from,tokenCounter,auth);
-    //     return from;
-    // }
      
     function mint(string memory tokenUri, string memory rfid, string memory motherRFID, string memory fatherRFID) external onlyOwner{
         require(!s_registeredRfid[rfid],"Rfid already registered");
@@ -111,10 +109,14 @@ contract mintToken is ERC721, Ownable{
         payable(owner).transfer(msg.value);
         //Safely transfer the token
         _transfer(owner, msg.sender, tokenCounter);
+
+        //Record the previous owner
+        s_ownerHistory[tokenCounter].push(owner);
+
         //reset the price mapping
         s_setFishPrice[tokenCounter] = 0;
 
-        emit tokenBought(tokenCounter, msg.sender, price);
+        emit tokenBought(tokenCounter, owner, msg.sender, price);
     }
 
     function addParentsToOrphanFish(string memory childRfid, string memory motherRfid, string memory fatherRfid) external onlyOwner{
@@ -159,5 +161,13 @@ contract mintToken is ERC721, Ownable{
     function getFishPrice(uint256 tokenCounter) external view returns(uint256){
         return s_setFishPrice[tokenCounter];
     }
+
+}
+
+contract TrackFish{
+
+}
+
+contract fishTrade{
 
 }
